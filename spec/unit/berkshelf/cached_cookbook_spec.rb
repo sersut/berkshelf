@@ -78,42 +78,4 @@ describe Berkshelf::CachedCookbook do
       expect(subject.dependencies).to be_a(Hash)
     end
   end
-
-  describe '#pretty_hash' do
-    shared_examples 'a pretty_hash cookbook attribute' do |attribute, key|
-      it "is not present when the `#{attribute}` attribute is nil" do
-        subject.stub(attribute.to_sym).and_return(nil)
-        expect(subject.pretty_hash).to_not have_key((key || attribute).to_sym)
-      end
-
-      it "is not present when the `#{attribute}` attribute is an empty string" do
-        subject.stub(attribute.to_sym).and_return('')
-        expect(subject.pretty_hash).to_not have_key((key || attribute).to_sym)
-      end
-
-      it "is not present when the `#{attribute}` attribute is an empty array" do
-        subject.stub(attribute.to_sym).and_return([])
-        expect(subject.pretty_hash).to_not have_key((key || attribute).to_sym)
-      end
-
-      it "is not present when the `#{attribute}` attribute is an empty hash" do
-        subject.stub(attribute.to_sym).and_return([])
-        expect(subject.pretty_hash).to_not have_key((key || attribute).to_sym)
-      end
-
-      it "is present when the `#{attribute}` attribute has a Hash value" do
-        subject.stub(attribute.to_sym).and_return(foo: 'bar')
-        expect(subject.pretty_hash).to have_key((key || attribute).to_sym)
-      end
-    end
-
-    it_behaves_like 'a pretty_hash cookbook attribute', 'cookbook_name', 'name'
-    it_behaves_like 'a pretty_hash cookbook attribute', 'version'
-    it_behaves_like 'a pretty_hash cookbook attribute', 'description'
-    it_behaves_like 'a pretty_hash cookbook attribute', 'maintainer', 'author'
-    it_behaves_like 'a pretty_hash cookbook attribute', 'maintainer_email', 'email'
-    it_behaves_like 'a pretty_hash cookbook attribute', 'license'
-    it_behaves_like 'a pretty_hash cookbook attribute', 'platforms'
-    it_behaves_like 'a pretty_hash cookbook attribute', 'dependencies'
-  end
 end
